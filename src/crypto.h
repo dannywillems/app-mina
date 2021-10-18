@@ -6,6 +6,7 @@
 
 #ifdef LEDGER_BUILD
     #include <os.h>
+    #include <cx.h>
 #endif
 
 #define BIP32_PATH_LEN 5
