@@ -650,8 +650,14 @@ bool sign(Signature *sig, const Keypair *kp, const ROInput *input, const uint8_t
                 THROW(INVALID_PARAMETER);
             }
 
+            // multiple calls to the heartbeat function
+            // to avoid making the MCU seeing the SE as stalled
+            // and to rearm the watchdog timer that would otherwise
+            // trigger a reset after 30 seconds
+            io_seproxyhal_io_heartbeat();
             // r = k*g
             affine_scalar_mul(&r, k, &AFFINE_ONE);
+            io_seproxyhal_io_heartbeat();
             field_copy(sig->rx, r.x);
 
             if (field_is_odd(r.y)) {
@@ -666,8 +672,11 @@ bool sign(Signature *sig, const Keypair *kp, const ROInput *input, const uint8_t
             }
 
             // s = k + e*sk
+            io_seproxyhal_io_heartbeat();
             scalar_mul(tmp, sig->s, kp->priv);
+            io_seproxyhal_io_heartbeat();
             scalar_add(sig->s, k, tmp);
+            io_seproxyhal_io_heartbeat();
         }
         CATCH_OTHER(e) {
             error = true;
