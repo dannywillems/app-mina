@@ -22,6 +22,7 @@ include $(BOLOS_SDK)/Makefile.defines
 
 APP_LOAD_PARAMS= --path "44'/12586'" --appFlags 0x240 $(COMMON_LOAD_PARAMS)
 
+# Add and push a new git tag to update the app version
 GIT_DESCRIBE=$(shell git describe --tags --abbrev=8 --always --long --dirty 2>/dev/null)
 VERSION_TAG=$(shell echo $(GIT_DESCRIBE) | sed 's/^v//g')
 APPVERSION_M=$(shell echo "${VERSION_TAG}" | cut -f 1 -d .)
