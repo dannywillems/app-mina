@@ -33,33 +33,29 @@ if [ ! -d dev-env/SDK ] ; then
     mkdir dev-env/CC/others
     mkdir dev-env/CC/nanox
 
-    wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
-    tar xf gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
-    rm gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
-    cp -r gcc-arm-none-eabi-10-2020-q4-major dev-env/CC/nanox/
-    mv gcc-arm-none-eabi-10-2020-q4-major dev-env/CC/others/
+    wget 'https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2'
+    tar xf gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
+    rm gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
+    mv gcc-arm-none-eabi-10.3-2021.10 dev-env/CC/nanox/
+    ln -s ../nanox/gcc-arm-none-eabi-10.3-2021.10 dev-env/CC/others/
 
-    wget http://releases.llvm.org/4.0.0/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.10.tar.xz -O clang+llvm.tar.xz
-    tar xf clang+llvm.tar.xz
-    rm clang+llvm.tar.xz
-    mv clang+llvm* dev-env/CC/others/clang-arm-fropi
-
-    wget http://releases.llvm.org/7.0.0/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O clang+llvm.tar.xz
+    wget 'https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz' -O clang+llvm.tar.xz
     tar xf clang+llvm.tar.xz
     rm clang+llvm.tar.xz
     mv clang+llvm* dev-env/CC/nanox/clang-arm-fropi
+    ln -s ../nanox/clang-arm-fropi dev-env/CC/others/
 
-    wget https://github.com/LedgerHQ/blue-secure-sdk/archive/blue-r21.1.tar.gz -O blue-secure-sdk.tar.gz
+    wget 'https://github.com/LedgerHQ/blue-secure-sdk/archive/blue-r21.1.tar.gz' -O blue-secure-sdk.tar.gz
     tar xf blue-secure-sdk.tar.gz
     rm blue-secure-sdk.tar.gz
     mv blue-secure-sdk* dev-env/SDK/blue-secure-sdk
 
-    wget https://github.com/LedgerHQ/nanos-secure-sdk/archive/refs/tags/2.0.0-1.tar.gz -O nanos-secure-sdk.tar.gz
+    wget 'https://github.com/LedgerHQ/nanos-secure-sdk/archive/refs/tags/2.1.0.tar.gz' -O nanos-secure-sdk.tar.gz
     tar xf nanos-secure-sdk.tar.gz
     rm nanos-secure-sdk.tar.gz
     mv nanos-secure-sdk* dev-env/SDK/nanos-secure-sdk
 
-    wget https://github.com/LedgerHQ/nanox-secure-sdk/archive/1.2.4-5.1.tar.gz -O nanox-secure-sdk.tar.gz
+    wget 'https://github.com/LedgerHQ/nanox-secure-sdk/archive/refs/tags/2.0.2.tar.gz' -O nanox-secure-sdk.tar.gz
     tar xf nanox-secure-sdk.tar.gz
     rm nanox-secure-sdk.tar.gz
     mv nanox-secure-sdk* dev-env/SDK/nanox-secure-sdk

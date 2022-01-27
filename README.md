@@ -11,7 +11,7 @@ If you don't want to setup a global environnment, you can also setup one just fo
 Install prerequisite and switch to the Nano dev-env:
 ```bash
 sudo apt install gcc-multilib g++-multilib
-sudo apt install python3-venv python3-dev libudev-dev libusb-1.0-0-dev
+sudo apt install python3-venv python3-dev libudev-dev libusb-1.0-0-dev libncurses5
 
 # install pyelftools if using emulator
 pip3 install --upgrade pip
