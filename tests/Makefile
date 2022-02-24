@@ -15,6 +15,9 @@ endif
 ifeq ("$(NANO_MODEL)", "nanox")
 TARGET_NAME=TARGET_NANOX
 endif
+ifeq ("$(NANO_MODEL)", "nanosp")
+TARGET_NAME=TARGET_NANOS2
+endif
 endif
 
 ifeq ("$(EMULATOR_SDK)","")

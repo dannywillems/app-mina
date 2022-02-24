@@ -33,10 +33,10 @@ APPNAME = "Mina"
 
 DEFINES += $(DEFINES_LIB) $(USER_DEFINES)
 
-ifeq ($(TARGET_NAME),TARGET_NANOX)
-	ICONNAME=icons/nanox_app_mina.gif
-else
+ifeq ($(TARGET_NAME),TARGET_NANOS)
 	ICONNAME=icons/nanos_app_mina.gif
+else
+	ICONNAME=icons/nanox_app_mina.gif
 endif
 
 ################
@@ -88,6 +88,8 @@ endif
 ifeq ("$(EMULATOR_SDK)","")
 ifeq ($(TARGET_NAME),TARGET_NANOX)
 EMULATOR_SDK=1.2
+else ifeq ($(TARGET_NAME),TARGET_NANOS2)
+EMULATOR_SDK=1.0
 else
 EMULATOR_SDK=2.0
 endif
@@ -107,6 +109,10 @@ endif
 
 ifeq ($(TARGET_NAME),TARGET_NANOX)
 EMULATOR_MODEL=nanox
+endif
+
+ifeq ($(TARGET_NAME),TARGET_NANOS2)
+EMULATOR_MODEL=nanosp
 endif
 
 ifeq ($(TARGET_NAME),TARGET_NANOS)
@@ -152,18 +158,20 @@ APP_LOAD_PARAMS += --tlvraw 9F:01
 DEFINES += HAVE_PENDING_REVIEW_SCREEN
 
 ifeq ($(TARGET_NAME),TARGET_NANOX)
-DEFINES       += BUILD_NANOX IO_SEPROXYHAL_BUFFER_SIZE_B=300
 DEFINES       += HAVE_BLE BLE_COMMAND_TIMEOUT_MS=2000
 DEFINES       += HAVE_BLE_APDU # basic ledger apdu transport over BLE
+endif
 
+ifeq ($(TARGET_NAME),TARGET_NANOS)
+DEFINES       += IO_SEPROXYHAL_BUFFER_SIZE_B=128
+else
+DEFINES       += BUILD_NANOX IO_SEPROXYHAL_BUFFER_SIZE_B=300
 DEFINES       += HAVE_GLO096
 DEFINES       += HAVE_BAGL BAGL_WIDTH=128 BAGL_HEIGHT=64
 DEFINES       += HAVE_BAGL_ELLIPSIS # long label truncation feature
 DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_REGULAR_11PX
 DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_EXTRABOLD_11PX
 DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_LIGHT_16PX
-else
-DEFINES   	  += IO_SEPROXYHAL_BUFFER_SIZE_B=128
 endif
 
 # Both nano S and X benefit from the flow.
@@ -173,10 +181,10 @@ DEFINES       += HAVE_UX_FLOW
 DEBUG = 0
 ifneq ($(DEBUG),0)
 
-        ifeq ($(TARGET_NAME),TARGET_NANOX)
-                DEFINES   += HAVE_PRINTF PRINTF=mcu_usb_printf
-        else
+        ifeq ($(TARGET_NAME),TARGET_NANOS)
                 DEFINES   += HAVE_PRINTF PRINTF=screen_printf
+        else
+                DEFINES   += HAVE_PRINTF PRINTF=mcu_usb_printf
         endif
 else
         DEFINES   += PRINTF\(...\)=
@@ -253,10 +261,10 @@ include $(BOLOS_SDK)/Makefile.glyphs
 ### variables processed by the common makefile.rules of the SDK to grab source files and include dirs
 APP_SOURCE_PATH  += src
 SDK_SOURCE_PATH  += lib_stusb lib_stusb_impl lib_u2f
+SDK_SOURCE_PATH  += lib_ux
 
 ifeq ($(TARGET_NAME),TARGET_NANOX)
 SDK_SOURCE_PATH  += lib_blewbxx lib_blewbxx_impl
-SDK_SOURCE_PATH  += lib_ux
 endif
 
 APP_LOAD_PARAMS_EVALUATED=$(shell printf '\\"%s\\" ' $(APP_LOAD_PARAMS))
