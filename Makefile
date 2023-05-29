@@ -16,7 +16,7 @@
 #*******************************************************************************
 
 ifeq ($(BOLOS_SDK),)
-$(error Environment variable BOLOS_SDK is not set (source ./prepare-devenv.sh))
+$(error Environment variable BOLOS_SDK is not set)
 endif
 include $(BOLOS_SDK)/Makefile.defines
 
@@ -77,50 +77,6 @@ STACK_CANARY=0
 endif
 else
 STACK_CANARY=0
-endif
-
-ifeq ("$(NO_EMULATOR)","")
-EMULATOR=1
-else
-EMULATOR=0
-endif
-
-ifeq ("$(EMULATOR_SDK)","")
-ifeq ($(TARGET_NAME),TARGET_NANOX)
-EMULATOR_SDK=1.2
-else ifeq ($(TARGET_NAME),TARGET_NANOS2)
-EMULATOR_SDK=1.0
-else
-EMULATOR_SDK=2.0
-endif
-endif
-
-ifeq ("$(NO_EMULATOR_TESTS)","")
-EMULATOR_TESTS=1
-else
-EMULATOR_TESTS=0
-endif
-
-ifneq ("$(AUTOMATION)","")
-AUTOMATION=1
-else
-AUTOMATION=0
-endif
-
-ifeq ($(TARGET_NAME),TARGET_NANOX)
-EMULATOR_MODEL=nanox
-endif
-
-ifeq ($(TARGET_NAME),TARGET_NANOS2)
-EMULATOR_MODEL=nanosp
-endif
-
-ifeq ($(TARGET_NAME),TARGET_NANOS)
-EMULATOR_MODEL=nanos
-endif
-
-ifeq ("$(EMULATOR_MODEL)","")
-$(error Unknown TARGET_NAME '$(TARGET_NAME)')
 endif
 
 # Make environmental flags consistent with DEFINES
@@ -195,11 +151,6 @@ $(info ================)
 $(info TARGETS              $(MAKECMDGOALS))
 $(info RELEASE_BUILD        $(RELEASE_BUILD))
 $(info TARGET_NAME          $(TARGET_NAME))
-$(info EMULATOR             $(EMULATOR))
-$(info EMULATOR_MODEL       $(EMULATOR_MODEL))
-$(info EMULATOR_SDK         $(EMULATOR_SDK))
-$(info EMULATOR_TESTS       $(EMULATOR_TESTS))
-$(info AUTOMATION           $(AUTOMATION))
 $(info ON_DEVICE_UNIT_TESTS $(ON_DEVICE_UNIT_TESTS))
 $(info STACK_CANARY         $(STACK_CANARY))
 $(info )
@@ -212,15 +163,6 @@ $(error HAVE_BOLOS_APP_STACK_CANARY should not be used for release builds);
 endif
 ifneq ($(shell echo $(DEFINES) | grep -c HAVE_ON_DEVICE_UNIT_TESTS),0)
 $(error HAVE_ON_DEVICE_UNIT_TESTS should not be used for release builds);
-endif
-endif
-
-ifneq ($(shell echo "$(MAKECMDGOALS)" | grep -c side_release),0)
-ifeq ($(EMULATOR),0)
-$(error NO_EMULATOR should not be used for side release builds);
-endif
-ifeq ($(EMULATOR_TESTS),0)
-$(error NO_EMULATOR_TESTS should not be used for side release builds);
 endif
 endif
 
@@ -304,9 +246,9 @@ side_release: all
 
 	@# Make sure unit tests are run with stack canary
 	@echo
-	@echo "SIDE RELEASE BUILD: Building with HAVE_BOLOS_APP_STACK_CANARY for unit tests"
+	@echo "SIDE RELEASE BUILD: Building with HAVE_BOLOS_APP_STACK_CANARY"
 	@echo
-	@RELEASE_BUILD=0 NO_STACK_CANARY= NO_EMULATOR= NO_EMULATOR_TEST= ON_DEVICE_UNIT_TESTS= $(MAKE) all
+	@RELEASE_BUILD=0 NO_STACK_CANARY= $(MAKE) all
 
 	@# Build release without stack canary
 	@$(MAKE) clean
@@ -355,62 +297,11 @@ load-offline: all
 delete:
 	python3 -m ledgerblue.deleteApp $(COMMON_DELETE_PARAMS)
 
-dev-env/speculos/build/src/launcher: dev-env/speculos
-ifeq ($(EMULATOR),1)
-	cd $<; cmake -Bbuild -H.
-	$(MAKE) -C $</build
-endif
-
-ifneq (,$(wildcard emulator.pid))
-EMULATOR_PID=`cat ./emulator.pid`
-endif
-stop_emulator:
-ifneq (,$(wildcard emulator.pid))
-	@echo "Stopping emulator with PID $(EMULATOR_PID)"
-	@kill $(EMULATOR_PID) >/dev/null 2>&1 || true
-	rm -f ./emulator.pid
-endif
-
-test:
-	$(MAKE) -C tests TARGET_NAME=$(TARGET_NAME) RELEASE_BUILD=$(RELEASE_BUILD)
-
-TEST_MNEMONIC=course grief vintage slim tell hospital car maze model style \
-              elegant kitchen state purpose matrix gas grid enable frown road \
-              goddess glove canyon key
-
-ifeq ($(EMULATOR),1)
-ifeq (,$(wildcard ./dev-env/speculos/CMakeLists.txt))
-$(error Submodules missing: use 'git submodule update --init --recursive' or set NO_EMULATOR=1.)
-endif
-endif
-
-ifeq ($(AUTOMATION),1)
-EMULATOR_AUTOMATION=--automation file:./emulator_automation.json
-else
-EMULATOR_AUTOMATION=
-endif
-
-run: all dev-env/speculos/build/src/launcher
-	@if [ $(EMULATOR) -eq 1 ]; then \
-	    echo "Running $(EMULATOR_MODEL) emulator" ; \
-	    ./dev-env/speculos/speculos.py -k $(EMULATOR_SDK) -m $(EMULATOR_MODEL) --ontop $(EMULATOR_AUTOMATION) \
-	                       -s "$(TEST_MNEMONIC)" \
-	                       ./bin/app.elf > emulator.log 2>&1 & \
-	    echo $$! > emulator.pid || exit 211; \
-	else \
-	    echo "Error: cannot run emulator with NO_EMULATOR environmental variable set"; \
-	    exit 1; \
-	fi
-
 # import generic rules from the sdk
 include $(BOLOS_SDK)/Makefile.rules
 
 #add dependency on custom makefile filename
 dep/%.d: %.c Makefile
-
-allclean: clean
-	$(MAKE) --directory=tests clean
-	rm -rf dev-env/speculos/build ledger-app-mina-*.{tar.gz,zip}
 
 listvariants:
 	@echo VARIANTS COIN mina
