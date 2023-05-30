@@ -94,6 +94,7 @@ UX_FLOW(
         &ux_sign_tx_flow_unit_tests_step
     );
 #else
+#ifndef HAVE_CRYPTO_TESTS
     UX_STEP_TIMEOUT(
         ux_sign_tx_comfort_flow_signing_step,
         pb,
@@ -109,6 +110,7 @@ UX_FLOW(
         ux_sign_tx_comfort_flow,
         &ux_sign_tx_comfort_flow_signing_step
     );
+#endif
 
     UX_STEP_NOCB(
         ux_sign_tx_flow_topic_step,
@@ -213,7 +215,12 @@ UX_FLOW(
     UX_STEP_VALID(
         ux_sign_tx_flow_approve_step,
         pb,
+
+#ifndef HAVE_CRYPTO_TESTS
         ux_flow_init(0, ux_sign_tx_comfort_flow, NULL);,
+#else
+        ux_flow_init(0, ux_sign_tx_done_flow, NULL);,
+#endif
         {
             &C_icon_validate_14,
             "Approve"

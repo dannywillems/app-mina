@@ -110,6 +110,7 @@ static void gen_address(void)
         &ux_get_address_result_flow_reject_step
     );
 
+#ifndef HAVE_CRYPTO_TESTS
     UX_STEP_TIMEOUT(
         ux_get_address_comfort_flow_processing_step,
         pb,
@@ -125,6 +126,7 @@ static void gen_address(void)
         ux_get_address_comfort_flow,
         &ux_get_address_comfort_flow_processing_step
     );
+#endif
 
     UX_STEP_NOCB(
         ux_get_address_flow_topic_step,
@@ -148,7 +150,12 @@ static void gen_address(void)
     UX_STEP_VALID(
         ux_get_address_flow_generate_step,
         pb,
+#ifndef HAVE_CRYPTO_TESTS 
         ux_flow_init(0, ux_get_address_comfort_flow, NULL);,
+
+#else
+        ux_flow_init(0, ux_get_address_result_flow, NULL);,
+#endif
         {
             &C_icon_validate_14,
             "Generate"
