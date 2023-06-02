@@ -313,8 +313,5 @@ delete:
 # import generic rules from the sdk
 include $(BOLOS_SDK)/Makefile.rules
 
-#add dependency on custom makefile filename
-dep/%.d: %.c Makefile
-
 listvariants:
 	@echo VARIANTS COIN mina
