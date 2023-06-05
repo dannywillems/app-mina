@@ -3,7 +3,6 @@
 #include "utils.h"
 #include "crypto.h"
 
-static bool     _generated;
 static uint32_t _account = 0;
 static char     _bip44_path[27]; // max length when 44'/12586'/4294967295'/0/0
 static char     _address[MINA_ADDRESS_LEN];
@@ -17,35 +16,10 @@ static uint8_t set_result_get_address(void)
     return tx;
 }
 
-static void gen_address(void)
-{
-    if (!_generated) {
-        BEGIN_TRY {
-            Keypair kp;
-            TRY {
-                generate_keypair(&kp, _account);
-                if (!generate_address(_address, sizeof(_address), &kp.pub)) {
-                    THROW(INVALID_PARAMETER);
-                }
-                _generated = true;
-
-                #ifdef HAVE_ON_DEVICE_UNIT_TESTS
-                sendResponse(set_result_get_address(), true);
-                #endif
-            }
-            FINALLY {
-                explicit_bzero(kp.priv, sizeof(kp.priv));
-            }
-            END_TRY;
-        }
-    }
-}
-
 #ifdef HAVE_ON_DEVICE_UNIT_TESTS
-    UX_STEP_NOCB_INIT(
+    UX_STEP_NOCB(
         ux_get_address_done_flow_step,
         pb,
-        gen_address(),
         {
             &C_icon_validate_14,
             "Done",
@@ -73,10 +47,9 @@ static void gen_address(void)
         &ux_get_address_flow_unit_tests_step
     );
 #else
-    UX_STEP_NOCB_INIT(
+    UX_STEP_NOCB(
         ux_get_address_result_flow_address_step,
         bnnn_paging,
-        gen_address(),
         {
             .title = "Address",
             .text = _address,
@@ -182,7 +155,6 @@ static void gen_address(void)
 #endif
 
 void ui_get_address(uint8_t *dataBuffer) {
-    _generated = false;
     _address[0] = '\0';
     _account = read_uint32_be(dataBuffer);
 
@@ -190,6 +162,7 @@ void ui_get_address(uint8_t *dataBuffer) {
     value_to_string(&_bip44_path[11], sizeof(_bip44_path) - 11, _account); // at most 21/27 used (max strnlen is 10 when _account = 4294967295)
     strncat(_bip44_path, "'/0/0", 6);                                      // at least 27 - 21 = 6 bytes free (just enough)
 
+    gen_address(_account, _address);
     #ifdef HAVE_ON_DEVICE_UNIT_TESTS
         ux_flow_init(0, ux_get_address_unit_test_flow, NULL);
     #else

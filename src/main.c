@@ -317,10 +317,7 @@ __attribute__((section(".boot"))) int main(void) {
     os_boot();
 
     for (;;) {
-                UX_INIT();
-#ifdef HAVE_BAGL
-                ux_stack_push();
-#endif  // HAVE_BAGL
+        UX_INIT();
 
         BEGIN_TRY {
             TRY {
