@@ -38,11 +38,10 @@ def get_stax_address_instructions():
     return instructions
 
 
-def get_stax_review_instructions():
+def get_stax_review_instructions(num_screen_skip):
     instructions = [NavIns(NavInsID.USE_CASE_CHOICE_CONFIRM)]
-    instructions.append(NavIns(NavInsID.USE_CASE_REVIEW_TAP))
-    instructions.append(NavIns(NavInsID.USE_CASE_REVIEW_TAP))
-    instructions.append(NavIns(NavInsID.USE_CASE_REVIEW_TAP))
+    for x in range(num_screen_skip):
+        instructions.append(NavIns(NavInsID.USE_CASE_REVIEW_TAP))
     instructions.append(NavIns(NavInsID.USE_CASE_REVIEW_CONFIRM))
     instructions.append(NavIns(NavInsID.USE_CASE_STATUS_DISMISS))
     return instructions
@@ -218,7 +217,7 @@ def test_sign_tx_0(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(13)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
     # account 0
     # private key 164244176fddb5d769b7de2027469d027ad428fadcc0c02396e6280142efb718
@@ -249,7 +248,7 @@ def test_sign_tx_12586(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(11)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 12586
@@ -276,11 +275,11 @@ def test_sign_tx_12586_1(test_name, backend, firmware, navigator):
     minaClient = MinaClient(backend)
 
     if firmware.device == "nanos":
-        instructions = get_nano_review_instructions(17)
+        instructions = get_nano_review_instructions(19)
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(12)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(4)
 
 
     # account 12586
@@ -312,7 +311,7 @@ def test_sign_tx_3(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(12)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 3
@@ -344,7 +343,7 @@ def test_sign_tx_0_1(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(11)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 0
@@ -376,7 +375,7 @@ def test_sign_tx_49370(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(9)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 49370
@@ -407,7 +406,7 @@ def test_sign_tx_12586_2(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(10)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 12586
@@ -438,7 +437,7 @@ def test_sign_tx_2(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(10)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 2
@@ -469,7 +468,7 @@ def test_sign_tx_0_2(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(12)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 0
@@ -500,7 +499,7 @@ def test_sign_tx_12586_3(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(10)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 12586
@@ -527,11 +526,11 @@ def test_sign_tx_12586_4(test_name, backend, firmware, navigator):
     minaClient = MinaClient(backend)
 
     if firmware.device == "nanos":
-        instructions = get_nano_review_instructions(16)
+        instructions = get_nano_review_instructions(18)
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(11)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(4)
 
 
     # account 12586
@@ -562,7 +561,7 @@ def test_sign_tx_3_1(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(11)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 3
@@ -593,7 +592,7 @@ def test_sign_tx_0_3(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(10)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 0
@@ -624,7 +623,7 @@ def test_sign_tx_49370_1(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(8)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 49370
@@ -655,7 +654,7 @@ def test_sign_tx_12586_5(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(9)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 12586
@@ -686,7 +685,7 @@ def test_sign_tx_2_1(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(9)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     # account 2
@@ -717,7 +716,7 @@ def test_sign_tx_0_4(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(12)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     name = test_name + "_mainet"
@@ -742,7 +741,7 @@ def test_sign_tx_0_4(test_name, backend, firmware, navigator):
     elif firmware.device.startswith("nano"):
         instructions = get_nano_review_instructions(13)
     else:
-        instructions = get_stax_review_instructions()
+        instructions = get_stax_review_instructions(3)
 
 
     name = test_name + "_testnet"
