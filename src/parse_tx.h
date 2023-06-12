@@ -19,9 +19,9 @@ typedef struct {
 typedef struct {
     char from[MINA_ADDRESS_LEN];
     char to[MINA_ADDRESS_LEN];
-    char amount[32];
-    char fee[32];
-    char total[32];
+    char amount[37];
+    char fee[37];
+    char total[37];
     char nonce[32];
     char valid_until[32];
     char memo[MEMO_BYTES - 1];
