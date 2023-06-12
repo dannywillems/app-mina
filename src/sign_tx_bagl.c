@@ -110,28 +110,28 @@ UX_FLOW(
 
     UX_STEP_NOCB(
         ux_sign_tx_flow_amount_step,
-        bn,
+        bn_paging,
         {
-            .line1 = "Amount",
-            .line2 = _ui.amount
+            .title = "Amount",
+            .text = _ui.amount
         }
     );
 
     UX_STEP_NOCB(
         ux_sign_tx_flow_fee_step,
-        bn,
+        bn_paging,
         {
-           "Fee",
-           _ui.fee
+           .title ="Fee",
+           .text =_ui.fee
         }
     );
 
     UX_STEP_NOCB(
         ux_sign_tx_flow_total_step,
-        bn,
+        bn_paging,
         {
-            "Total",
-            _ui.total
+            .title ="Total",
+            .text =_ui.total
         }
     );
 
