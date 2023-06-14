@@ -76,12 +76,12 @@ static void continue_callback(void) {
         nbPairs++;
 
         // From 
-        transactionContext.tagValuePair[nbPairs].item = "Sender";
+        transactionContext.tagValuePair[nbPairs].item = "From";
         transactionContext.tagValuePair[nbPairs].value = _ui.from;
         nbPairs++;
 
         // To 
-        transactionContext.tagValuePair[nbPairs].item = "Receiver";
+        transactionContext.tagValuePair[nbPairs].item = "To";
         transactionContext.tagValuePair[nbPairs].value = _ui.to;
         nbPairs++;
     }
@@ -146,12 +146,12 @@ static void continue_callback(void) {
     transactionContext.tagValueList.nbPairs = nbPairs;
 
     transactionContext.infoLongPress.icon = &C_Mina_64px;
-    transactionContext.infoLongPress.longPressText = "Approve";
+    transactionContext.infoLongPress.longPressText = "Hold to sign";
     transactionContext.infoLongPress.longPressToken = 1;
     transactionContext.infoLongPress.tuneId = TUNE_TAP_CASUAL;
     transactionContext.infoLongPress.text = "Sign Transaction";
 
-    nbgl_useCaseStaticReview(&transactionContext.tagValueList, &transactionContext.infoLongPress, "Cancel", start_processing_callback);
+    nbgl_useCaseStaticReview(&transactionContext.tagValueList, &transactionContext.infoLongPress, "Reject transaction", start_processing_callback);
 }
 
 void ui_sign_tx(uint8_t *dataBuffer, uint8_t dataLength)
@@ -165,7 +165,7 @@ void ui_sign_tx(uint8_t *dataBuffer, uint8_t dataLength)
         sign_transaction();
         approve_callback();
     #else
-        nbgl_useCaseReviewStart(&C_Mina_64px, "Sign Transaction", "", "Cancel", continue_callback, prompt_cancel);
+        nbgl_useCaseReviewStart(&C_Mina_64px, "Review Transaction", "", "Cancel", continue_callback, prompt_cancel);
     #endif
 }
 #endif // HAVE_NBGL

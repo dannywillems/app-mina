@@ -9,6 +9,7 @@
     #include <os.h>
 #endif
 
+static const char TICKER_WITH_SPACE[] = "MINA ";
 static const char B58_ALPHABET[] = {
     '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
     'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
@@ -184,7 +185,7 @@ char *amount_to_string(char *buf, const size_t len, uint64_t amount)
         characteristic_len++;
     }
     characteristic_len = characteristic_len ? characteristic_len : 1;
-    size_t total_len = characteristic_len + 1 + mantissa_len + 1;
+    size_t total_len = characteristic_len + 1 + mantissa_len + 1 + strlen(TICKER_WITH_SPACE);
     if (total_len > len) {
         *buf = '\0';
         return buf;
@@ -208,6 +209,10 @@ char *amount_to_string(char *buf, const size_t len, uint64_t amount)
 
             amount /= 10;
         }
+    }
+
+    for (size_t i = strlen(TICKER_WITH_SPACE); i > 0; i--) {
+        *(--end) = TICKER_WITH_SPACE[i - 1];
     }
 
     return buf;
