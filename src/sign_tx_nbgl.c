@@ -35,7 +35,7 @@ static void approve_callback(void)
 static void cancel_callback(void)
 {
     sendResponse(0, false);
-    nbgl_useCaseStatus("Transaction\ncancelled", false, ui_idle);
+    nbgl_useCaseStatus("Transaction\nrejected", false, ui_idle);
 }
 
 static void prompt_cancel(void) 
@@ -165,7 +165,7 @@ void ui_sign_tx(uint8_t *dataBuffer, uint8_t dataLength)
         sign_transaction();
         approve_callback();
     #else
-        nbgl_useCaseReviewStart(&C_Mina_64px, "Review Transaction", "", "Cancel", continue_callback, prompt_cancel);
+        nbgl_useCaseReviewStart(&C_Mina_64px, "Review Transaction", "", "Reject transaction", continue_callback, prompt_cancel);
     #endif
 }
 #endif // HAVE_NBGL
