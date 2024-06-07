@@ -58,7 +58,7 @@ void ui_get_address(uint8_t *dataBuffer) {
         nbgl_useCaseAddressReview(_address,
                                   &transactionContext.tagValueList,
                                   &C_Mina_64px,
-                                  "Verify Mina\naddress",
+                                  "Verify Mina address",
                                   NULL,
                                   confirmation_callback);
     #endif

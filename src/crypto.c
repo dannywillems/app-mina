@@ -627,13 +627,16 @@ bool message_derive(Scalar out, const Keypair *kp, const ROInput *input, const u
 
     // blake2b hash
     cx_blake2b_t ctx;
-    cx_err_t cx_err;
-    cx_err = cx_blake2b_init_no_throw(&ctx, 256);
-    LEDGER_ASSERT(cx_err == CX_OK, "cx_blake2b_init_no_throw fail");
-    cx_err = cx_hash_no_throw(&ctx.header, 0, derive_msg, derive_len, NULL, 0);
-    LEDGER_ASSERT(cx_err == CX_OK, "cx_hash_no_throw fail");
-    cx_err = cx_hash_no_throw(&ctx.header, CX_LAST, NULL, 0, out, ctx.ctx.outlen);
-    LEDGER_ASSERT(cx_err == CX_OK, "cx_hash_no_throw fail");
+    if(CX_OK != cx_blake2b_init_no_throw(&ctx, 256)){
+        return false;
+    }
+
+    if(CX_OK != cx_hash_no_throw(&ctx.header, 0, derive_msg, derive_len, NULL, 0)){
+        return false;
+    }
+    if(CX_OK != cx_hash_no_throw(&ctx.header, CX_LAST, NULL, 0, out, ctx.ctx.outlen)){
+        return false;
+    }
 
     // Swap from little-endian to big-endian in place
     for (size_t i = SCALAR_BYTES; i > SCALAR_BYTES/2; i--) {

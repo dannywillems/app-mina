@@ -18,8 +18,8 @@ def get_nano_address_instructions(num_screen_skip):
     return instructions
 
 
-def get_nano_preauth_instructions(num_screen_skip):
-    return get_nano_review_instructions(num_screen_skip)
+def get_nano_preauth_instructions():
+    return get_nano_review_instructions(2)
 
 def get_stax_address_instructions(firmware):
     instructions = [NavIns(NavInsID.SWIPE_CENTER_TO_LEFT)]
@@ -42,10 +42,10 @@ def test_get_address_0(test_name, backend, firmware, navigator):
     minaClient = MinaClient(backend)
 
     if firmware.device == "nanos":
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(4)
     elif firmware.is_nano:
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(2)
     else:
         instructions = get_stax_address_instructions(firmware)
@@ -66,10 +66,10 @@ def test_get_address_1(test_name, backend, firmware, navigator):
     minaClient = MinaClient(backend)
 
     if firmware.device == "nanos":
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(4)
     elif firmware.is_nano:
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(2)
     else:
         instructions = get_stax_address_instructions(firmware)
@@ -91,10 +91,10 @@ def test_get_address_2(test_name, backend, firmware, navigator):
     minaClient = MinaClient(backend)
 
     if firmware.device == "nanos":
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(4)
     elif firmware.is_nano:
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(2)
     else:
         instructions = get_stax_address_instructions(firmware)
@@ -116,10 +116,10 @@ def test_get_address_3(test_name, backend, firmware, navigator):
     minaClient = MinaClient(backend)
 
     if firmware.device == "nanos":
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(4)
     elif firmware.is_nano:
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(2)
     else:
         instructions = get_stax_address_instructions(firmware)
@@ -140,10 +140,10 @@ def test_get_address_49370(test_name, backend, firmware, navigator):
     minaClient = MinaClient(backend)
 
     if firmware.device == "nanos":
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(4)
     elif firmware.is_nano:
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(2)
     else:
         instructions = get_stax_address_instructions(firmware)
@@ -165,10 +165,10 @@ def test_get_address_x312a(test_name, backend, firmware, navigator):
     minaClient = MinaClient(backend)
 
     if firmware.device == "nanos":
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(4)
     elif firmware.is_nano:
-        instructions_preauth = get_nano_preauth_instructions(2)
+        instructions_preauth = get_nano_preauth_instructions()
         instructions = get_nano_address_instructions(2)
     else:
         instructions = get_stax_address_instructions(firmware)
