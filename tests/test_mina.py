@@ -1,39 +1,11 @@
 #!/usr/bin/env python3
 
 
-from ragger.navigator import NavInsID, NavIns
-from pathlib import Path
 from mina_client import *
 
 
-TESTS_ROOT_DIR = Path(__file__).parent
-
-def get_nano_review_instructions(num_screen_skip):
-    instructions = [NavIns(NavInsID.RIGHT_CLICK)] * num_screen_skip
-    instructions.append(NavIns(NavInsID.BOTH_CLICK))
-    return instructions
-
-def get_nano_address_instructions(num_screen_skip):
-    instructions = get_nano_review_instructions(num_screen_skip)
-    return instructions
-
-
-def get_nano_preauth_instructions():
-    return get_nano_review_instructions(2)
-
-def get_stax_address_instructions(firmware):
-    instructions = [NavIns(NavInsID.SWIPE_CENTER_TO_LEFT)]
-    instructions.append(NavIns(NavInsID.TOUCH, (200, 280 if firmware.device.startswith("flex") else 335)))
-    instructions.append(NavIns(NavInsID.USE_CASE_ADDRESS_CONFIRMATION_EXIT_QR))
-    instructions.append(NavIns(NavInsID.SWIPE_CENTER_TO_LEFT if firmware.device.startswith("flex")
-                               else NavInsID.USE_CASE_ADDRESS_CONFIRMATION_TAP))
-    instructions.append(NavIns(NavInsID.USE_CASE_ADDRESS_CONFIRMATION_CONFIRM))
-    instructions.append(NavIns(NavInsID.USE_CASE_STATUS_DISMISS))
-    return instructions
-
-
 class TestsAddress:
-    def test_get_address_0(self, test_name, backend, firmware, navigator):
+    def test_get_address_0(self, preauth_navigator, backend, scenario_navigator):
         # Address generation tests
         #
         #     These tests were automatically generated from the Mina c-reference-signer
@@ -42,148 +14,81 @@ class TestsAddress:
         #     Generate: ./unit_tests ledger_gen
 
         minaClient = MinaClient(backend)
-
-        if firmware.device == "nanos":
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(4)
-        elif firmware.is_nano:
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(2)
-        else:
-            instructions = get_stax_address_instructions(firmware)
-
         # account 0
         # private key 164244176fddb5d769b7de2027469d027ad428fadcc0c02396e6280142efb718
         with minaClient.get_address_async(0):
-            if firmware.is_nano:
-                navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name + "_preauth", instructions_preauth, screen_change_after_last_instruction=False)
-            navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name, instructions)
+            preauth_navigator.navigate()
+            scenario_navigator.address_review_approve()
 
-        response: bytes = backend.last_async_response.data.decode(
-            'utf-8').rstrip('\x00')
+        response: bytes = backend.last_async_response.data.decode('utf-8').rstrip('\x00')
 
         assert (response == "B62qnzbXmRNo9q32n4SNu2mpB8e7FYYLH8NmaX6oFCBYjjQ8SbD7uzV")
 
-    def test_get_address_1(self, test_name, backend, firmware, navigator):
+    def test_get_address_1(self, preauth_navigator, backend, scenario_navigator):
         minaClient = MinaClient(backend)
-
-        if firmware.device == "nanos":
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(4)
-        elif firmware.is_nano:
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(2)
-        else:
-            instructions = get_stax_address_instructions(firmware)
 
         # account 1
         # private key 3ca187a58f09da346844964310c7e0dd948a9105702b716f4d732e042e0c172e
         with minaClient.get_address_async(1):
-            if firmware.is_nano:
-                navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name + "_preauth", instructions_preauth, screen_change_after_last_instruction=False)
-            navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name, instructions)
+            preauth_navigator.navigate()
+            scenario_navigator.address_review_approve()
 
-        response: bytes = backend.last_async_response.data.decode(
-            'utf-8').rstrip('\x00')
+        response: bytes = backend.last_async_response.data.decode('utf-8').rstrip('\x00')
 
         assert (response == "B62qicipYxyEHu7QjUqS7QvBipTs5CzgkYZZZkPoKVYBu6tnDUcE9Zt")
 
 
-    def test_get_address_2(self, test_name, backend, firmware, navigator):
+    def test_get_address_2(self, preauth_navigator, backend, scenario_navigator):
         minaClient = MinaClient(backend)
-
-        if firmware.device == "nanos":
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(4)
-        elif firmware.is_nano:
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(2)
-        else:
-            instructions = get_stax_address_instructions(firmware)
 
         # account 2
         # private key 336eb4a19b3d8905824b0f2254fb495573be302c17582748bf7e101965aa4774
         with minaClient.get_address_async(1):
-            if firmware.is_nano:
-                navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name + "_preauth", instructions_preauth, screen_change_after_last_instruction=False)
-            navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name, instructions)
+            preauth_navigator.navigate()
+            scenario_navigator.address_review_approve()
 
-        response: bytes = backend.last_async_response.data.decode(
-            'utf-8').rstrip('\x00')
+        response: bytes = backend.last_async_response.data.decode('utf-8').rstrip('\x00')
 
         assert (response == "B62qicipYxyEHu7QjUqS7QvBipTs5CzgkYZZZkPoKVYBu6tnDUcE9Zt")
 
 
-    def test_get_address_3(self, test_name, backend, firmware, navigator):
+    def test_get_address_3(self, preauth_navigator, backend, scenario_navigator):
         minaClient = MinaClient(backend)
-
-        if firmware.device == "nanos":
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(4)
-        elif firmware.is_nano:
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(2)
-        else:
-            instructions = get_stax_address_instructions(firmware)
 
         # account 3
         # private key 1dee867358d4000f1dafa5978341fb515f89eeddbe450bd57df091f1e63d4444
         with minaClient.get_address_async(3):
-            if firmware.is_nano:
-                navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name + "_preauth", instructions_preauth, screen_change_after_last_instruction=False)
-            navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name, instructions)
+            preauth_navigator.navigate()
+            scenario_navigator.address_review_approve()
 
-        response: bytes = backend.last_async_response.data.decode(
-            'utf-8').rstrip('\x00')
+        response: bytes = backend.last_async_response.data.decode('utf-8').rstrip('\x00')
 
         assert (response == "B62qoqiAgERjCjXhofXiD7cMLJSKD8hE8ZtMh4jX5MPNgKB4CFxxm1N")
 
-    def test_get_address_49370(self, test_name, backend, firmware, navigator):
+    def test_get_address_49370(self, preauth_navigator, backend, scenario_navigator):
         minaClient = MinaClient(backend)
-
-        if firmware.device == "nanos":
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(4)
-        elif firmware.is_nano:
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(2)
-        else:
-            instructions = get_stax_address_instructions(firmware)
 
         # account 49370
         # private key 20f84123a26e58dd32b0ea3c80381f35cd01bc22a20346cc65b0a67ae48532ba
         with minaClient.get_address_async(49370):
-            if firmware.is_nano:
-                navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name + "_preauth", instructions_preauth, screen_change_after_last_instruction=False)
-            navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name, instructions)
+            preauth_navigator.navigate()
+            scenario_navigator.address_review_approve()
 
-        response: bytes = backend.last_async_response.data.decode(
-            'utf-8').rstrip('\x00')
+        response: bytes = backend.last_async_response.data.decode('utf-8').rstrip('\x00')
 
         assert (response == "B62qkiT4kgCawkSEF84ga5kP9QnhmTJEYzcfgGuk6okAJtSBfVcjm1M")
 
 
-    def test_get_address_x312a(self, test_name, backend, firmware, navigator):
+    def test_get_address_x312a(self, preauth_navigator, backend, scenario_navigator):
         minaClient = MinaClient(backend)
-
-        if firmware.device == "nanos":
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(4)
-        elif firmware.is_nano:
-            instructions_preauth = get_nano_preauth_instructions()
-            instructions = get_nano_address_instructions(2)
-        else:
-            instructions = get_stax_address_instructions(firmware)
 
         # account 0x312a
         # private key 3414fc16e86e6ac272fda03cf8dcb4d7d47af91b4b726494dab43bf773ce1779
         with minaClient.get_address_async(0x312a):
-            if firmware.is_nano:
-                navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name + "_preauth", instructions_preauth, screen_change_after_last_instruction=False)
-            navigator.navigate_and_compare(TESTS_ROOT_DIR, test_name, instructions)
+            preauth_navigator.navigate()
+            scenario_navigator.address_review_approve()
 
-        response: bytes = backend.last_async_response.data.decode(
-            'utf-8').rstrip('\x00')
+        response: bytes = backend.last_async_response.data.decode('utf-8').rstrip('\x00')
 
         assert (response == "B62qoG5Yk4iVxpyczUrBNpwtx2xunhL48dydN53A2VjoRwF8NUTbVr4")
 

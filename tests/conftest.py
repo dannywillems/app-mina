@@ -1,4 +1,5 @@
 from ragger.conftest import configuration
+from ragger.navigator import NavInsID
 import pytest
 
 ###########################
@@ -33,3 +34,23 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if "all" in item.keywords:
             item.add_marker(skip)
+
+class PreauthNavigator:
+    def __init__(self, navigator, firmware, default_screenshot_path, test_name):
+        self.navigator = navigator
+        self.firmware = firmware
+        self.default_screenshot_path = default_screenshot_path
+        self.test_name = test_name
+
+    def navigate(self):
+        if self.firmware.is_nano:
+            self.navigator.navigate_until_text_and_compare(navigate_instruction=NavInsID.RIGHT_CLICK,
+                                                           validation_instructions=[NavInsID.BOTH_CLICK],
+                                                           text="Generate",
+                                                           path=self.default_screenshot_path,
+                                                           test_case_name=self.test_name + "_preauth",
+                                                           screen_change_after_last_instruction=False)
+
+@pytest.fixture(scope="function")
+def preauth_navigator(navigator, firmware, default_screenshot_path, test_name) -> PreauthNavigator:
+    return PreauthNavigator(navigator, firmware, default_screenshot_path, test_name)
