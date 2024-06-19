@@ -43,13 +43,13 @@ class TestsAddress:
 
         # account 2
         # private key 336eb4a19b3d8905824b0f2254fb495573be302c17582748bf7e101965aa4774
-        with minaClient.get_address_async(1):
+        with minaClient.get_address_async(2):
             preauth_navigator.navigate()
             scenario_navigator.address_review_approve()
 
         response: bytes = backend.last_async_response.data.decode('utf-8').rstrip('\x00')
 
-        assert (response == "B62qicipYxyEHu7QjUqS7QvBipTs5CzgkYZZZkPoKVYBu6tnDUcE9Zt")
+        assert (response == "B62qrKG4Z8hnzZqp1AL8WsQhQYah3quN1qUj3SyfJA8Lw135qWWg1mi")
 
 
     def test_get_address_3(self, preauth_navigator, backend, scenario_navigator):
