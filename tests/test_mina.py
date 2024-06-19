@@ -209,7 +209,7 @@ def test_sign_tx_0(backend, scenario_navigator):
                    271828,
                    "Hello Mina!",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes = backend.last_async_response.data.hex()
 
@@ -233,7 +233,7 @@ def test_sign_tx_12586(backend, scenario_navigator):
                    4294967295,
                    "",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes = backend.last_async_response.data.hex()
     assert (response == "23a9e2375dd3d0cd061e05c33361e0ba270bf689c4945262abdcc81d7083d8c311ae46b8bebfc98c584e2fb54566851919b58cf0917a256d2c1113daa1ccb27f")
@@ -256,7 +256,7 @@ def test_sign_tx_12586_1(backend, scenario_navigator):
                    4294967295,
                    "01234567890123456789012345678901",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes = backend.last_async_response.data.hex()
 
@@ -280,7 +280,7 @@ def test_sign_tx_3(backend, scenario_navigator):
                    1982,
                    "",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes = backend.last_async_response.data.hex()
 
@@ -304,7 +304,7 @@ def test_sign_tx_0_1(backend, scenario_navigator):
                    1337,
                    "Delewho?",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
 
@@ -328,7 +328,7 @@ def test_sign_tx_49370(backend, scenario_navigator):
                    4294967295,
                    "",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "07e9f88fc671ed06781f9edb233fdbdee20fa32303015e795747ad9e43fcb47b3ce34e27e31f7c667756403df3eb4ce670d9175dd0ae8490b273485b71c56066")
@@ -351,7 +351,7 @@ def test_sign_tx_12586_2(backend, scenario_navigator):
                    4294967295,
                    "more delegates, more fun........",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "1ff9f77fed4711e0ebe2a7a46a7b1988d1b62a850774bf299ec71a24d5ebfdd81d04a570e4811efe867adefe3491ba8b210f24bd0ec8577df72212d61b569b15")
@@ -374,7 +374,7 @@ def test_sign_tx_2(backend, scenario_navigator):
                    577216,
                    "",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "26ca6b95dee29d956b813afa642a6a62cd89b1929320ed6b099fd191a217b08d2c9a54ba1c95e5000b44b93cfbd3b625e20e95636f1929311473c10858a27f09")
@@ -397,7 +397,7 @@ def test_sign_tx_0_2(backend, scenario_navigator):
                    271828,
                    "Hello Mina!",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "124c592178ed380cdffb11a9f8e1521bf940e39c13f37ba4c55bb4454ea69fba3c3595a55b06dac86261bb8ab97126bf3f7fff70270300cb97ff41401a5ef789")
@@ -420,7 +420,7 @@ def test_sign_tx_12586_3(backend, scenario_navigator):
                    4294967295,
                    "",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "204eb1a37e56d0255921edd5a7903c210730b289a622d45ed63a52d9e3e461d13dfcf301da98e218563893e6b30fa327600c5ff0788108652a06b970823a4124")
@@ -443,7 +443,7 @@ def test_sign_tx_12586_4(backend, scenario_navigator):
                    4294967295,
                    "01234567890123456789012345678901",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "076d8ebca8ccbfd9c8297a768f756ff9d08c049e585c12c636d57ffcee7f6b3b1bd4b9bd42cc2cbee34b329adbfc5127fe5a2ceea45b7f55a1048b7f1a9f7559")
@@ -466,7 +466,7 @@ def test_sign_tx_3_1(backend, scenario_navigator):
                    1982,
                    "",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "058ed7fb4e17d9d400acca06fe20ca8efca2af4ac9a3ed279911b0bf93c45eea0e8961519b703c2fd0e431061d8997cac4a7574e622c0675227d27ce2ff357d9")
@@ -489,7 +489,7 @@ def test_sign_tx_0_3(backend, scenario_navigator):
                    1337,
                    "Delewho?",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "0904e9521a95334e3f6757cb0007ec8af3322421954255e8d263d0616910b04d213344f8ec020a4b873747d1cbb07296510315a2ec76e52150a4c765520d387f")
@@ -512,7 +512,7 @@ def test_sign_tx_49370_1(backend, scenario_navigator):
                    4294967295,
                    "",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "2406ab43f8201bd32bdd81b361fdb7871979c0eec4e3b7a91edf87473963c8a4069f4811ebc5a0e85cbb4951bffe93b638e230ce5a250cb08d2c250113a1967c")
@@ -535,7 +535,7 @@ def test_sign_tx_12586_5(backend, scenario_navigator):
                    4294967295,
                    "more delegates, more fun........",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "36a80d0421b9c0cbfa08ea95b27f401df108b30213ae138f1f5978ffc59606cf2b64758db9d26bd9c5b908423338f7445c8f0a07520f2154bbb62926aa0cb8fa")
@@ -558,7 +558,7 @@ def test_sign_tx_2_1(backend, scenario_navigator):
                    577216,
                    "",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR)
+        scenario_navigator.review_approve()
 
     response: bytes=backend.last_async_response.data.hex()
     assert (response == "093f9ef0e4e051279da0a3ded85553847590ab739ee1bfd59e5bb30f98ed8a001a7a60d8506e2572164b7a525617a09f17e1756ac37555b72e01b90f37271595")
@@ -567,8 +567,6 @@ def test_sign_tx_2_1(backend, scenario_navigator):
 def test_sign_tx_0_4(test_name, backend, scenario_navigator):
 
     minaClient = MinaClient(backend)
-
-    name = test_name + "_mainet"
 
     # Check testnet and mainnet signatures are not equal
     with minaClient.sign_tx_async(mina.TX_TYPE_PAYMENT,
@@ -581,11 +579,9 @@ def test_sign_tx_0_4(test_name, backend, scenario_navigator):
                    271828,
                    "Hello Mina!",
                    mina.MAINNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR, name)
+        scenario_navigator.review_approve(test_name=test_name + "_mainet")
 
     response_main: bytes=backend.last_async_response.data.hex()
-
-    name = test_name + "_testnet"
 
     with minaClient.sign_tx_async(mina.TX_TYPE_PAYMENT,
                    0,
@@ -597,7 +593,7 @@ def test_sign_tx_0_4(test_name, backend, scenario_navigator):
                    271828,
                    "Hello Mina!",
                    mina.TESTNET_ID):
-        scenario_navigator.review_approve(TESTS_ROOT_DIR, name)
+        scenario_navigator.review_approve(test_name=test_name + "_testnet")
 
     response_test: bytes=backend.last_async_response.data.hex()
 
