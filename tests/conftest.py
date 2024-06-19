@@ -7,7 +7,7 @@ import pytest
 
 # You can configure optional parameters by overriding the value of ragger.configuration.OPTIONAL_CONFIGURATION
 # Please refer to ragger/conftest/configuration.py for their descriptions and accepted values
-configuration.OPTIONAL.BACKEND_SCOPE = "function"
+configuration.OPTIONAL.BACKEND_SCOPE = "class"
 
 configuration.OPTIONAL.CUSTOM_SEED = "course grief vintage slim tell hospital car maze model style elegant kitchen state purpose matrix gas grid enable frown road goddess glove canyon key"
 
