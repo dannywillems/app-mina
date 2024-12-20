@@ -14,6 +14,8 @@
 #define BIP32_PATH_LEN 5
 #define BIP32_HARDENED_OFFSET 0x80000000
 
+// The size in bytes of a base field element.
+// The field is on 256 bits as it is the Pasta curves
 #define FIELD_BYTES    32
 #define SCALAR_BYTES   32
 #define SCALAR_BITS    256
@@ -30,17 +32,26 @@
 typedef uint8_t Field[FIELD_BYTES];
 typedef uint8_t Scalar[SCALAR_BYTES];
 
+/**
+   Projective coordinates of an elliptic curve point
+*/
 typedef struct group_t {
     Field X;
     Field Y;
     Field Z;
 } Group;
 
+/**
+   Affine coordinates of an elliptic curve point
+*/
 typedef struct affine_t {
-    Field x;
-    Field y;
+  Field x;
+  Field y;
 } Affine;
 
+/**
+   Compressed representations of an elliptic curve point
+*/
 typedef struct compressed_t {
     Field x;
     bool is_odd;
